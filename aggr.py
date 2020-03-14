@@ -1,18 +1,20 @@
 #################################
 # Author: Ian Schwartz
-# Aggr v1.0
+# Aggr v1.1
 #################################
 
 import requests, sys, os, locale, click
 from datetime import datetime
 from playsound import playsound
 from pyfiglet import Figlet
+from colorama import init, Fore
 
+init()  # This starts the color engine
 
 locale.setlocale(locale.LC_ALL, '')  # Set either commas or periods to seperate numbers by thousands
 
 f = Figlet(font='big')
-print(f.renderText('BITCORN  AGGR'))
+print(Fore.YELLOW + f.renderText('BITCORN  AGGR'))
 
 
 def resource_path(relative_path):
@@ -27,9 +29,9 @@ def resource_path(relative_path):
 
 
 @click.command()
-@click.option('--market', prompt='Enter market pair', default='CORN-USDT', help='Which market do you want to use? Default is CORN-USDT')
 @click.option('--sound', prompt='Audio alert for buys over dollar amount of', default=100000, help='Set the size in $ to play audio beep')
-def aggr(market, sound):
+def aggr(sound):
+    market = 'CORN-USDT'
     audio_file = resource_path('high.mp3')
     start = datetime.utcnow().replace(microsecond=0).isoformat()
     feed = []
@@ -38,7 +40,7 @@ def aggr(market, sound):
 
     while True:
         try:
-            if count == 120:  # This sets a refresh of start time so the list stays pruned and doesnt slow th app down
+            if count == 120:  # This sets a refresh of start time so the list stays pruned and doesnt slow the app down
                 start = datetime.utcnow().replace(microsecond=0).isoformat()
             count += 1
             dup = 0
@@ -58,8 +60,10 @@ def aggr(market, sound):
                 side = i['side']
                 if side == 'sell':
                     action = 'Buy '
+                    color = Fore.GREEN  # Sets Text color to GREEN
                 elif side == 'buy':
                     action = 'Sell'
+                    color = Fore.RED  # Sets Text color to RED
                 price = i['price']
                 quantity = i['quantity']
                 timestamp = i['time']
@@ -72,10 +76,10 @@ def aggr(market, sound):
                     if int(quantity) > sound:
                         playsound(audio_file)
                     # Prints formatted string to console window
-                    print(timestamp + ' -> ' + "{0:.6f}".format(float(price)) + ' - ' + action + ': ' +
+                    print(color + timestamp + ' -> ' + "{0:.6f}".format(float(price)) + ' - ' + action + ': ' +
                           f'{int(quantity):n}' + ' CORN' + ' Total: ' + '${:,.2f}'.format(
                                             dollar) + ' USDT')
-                    data = (timestamp + ' -> ' + "{0:.6f}".format(float(price)) + ' - ' + action + ': ' +
+                    data = (color + timestamp + ' -> ' + "{0:.6f}".format(float(price)) + ' - ' + action + ': ' +
                             f'{int(quantity):n}' + ' CORN' + ' Total: ' + '${:,.2f}'.format(
                                             dollar) + ' USDT')
 
