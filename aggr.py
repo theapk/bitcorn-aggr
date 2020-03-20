@@ -1,6 +1,6 @@
 #################################
 # Author: Ian Schwartz
-# Aggr v1.1
+# Aggr v1.2
 #################################
 
 import requests, sys, os, locale, click
@@ -11,11 +11,10 @@ from colorama import init, Fore
 
 init()  # This starts the color engine
 
-locale.setlocale(locale.LC_ALL, '')  # Set either commas or periods to seperate numbers by thousands
+locale.setlocale(locale.LC_ALL, '')  # Set either commas or periods to separate numbers by thousands
 
 f = Figlet(font='big')
-print(Fore.YELLOW + f.renderText('BITCORN  AGGR'))
-
+print(Fore.YELLOW + f.renderText('CORN AGGR v1.2'))
 
 def resource_path(relative_path):
     # Get absolute path to resource, works for dev and for PyInstaller
@@ -29,10 +28,12 @@ def resource_path(relative_path):
 
 
 @click.command()
-@click.option('--sound', prompt='Audio alert for buys over dollar amount of', default=100000, help='Set the size in $ to play audio beep')
+@click.option('--sound', prompt='Audio "beep" for each buys or sells over X dollar amount', default=100000, help='Set the size in $ to play audio beep')
 def aggr(sound):
     market = 'CORN-USDT'
     audio_file = resource_path('high.mp3')
+    playsound(audio_file)
+    print('Started, waiting for orders...')
     start = datetime.utcnow().replace(microsecond=0).isoformat()
     feed = []
     count = 0
