@@ -1,4 +1,4 @@
-# Bitcorn-aggr v1.2
+# Bitcorn-aggr v1.3
 Author: Ian Schwartz
 
 ![Bitcorn Aggr Screenshot](https://i.imgur.com/YKBr0HJ.png)
