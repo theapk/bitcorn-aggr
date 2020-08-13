@@ -1,6 +1,6 @@
 #################################
 # Author: Ian Schwartz
-# Aggr v1.3
+# Aggr v2
 #################################
 
 import requests, sys, os, locale, click
@@ -14,7 +14,7 @@ init()  # This starts the color engine
 locale.setlocale(locale.LC_ALL, '')  # Set either commas or periods to separate numbers by thousands
 
 f = Figlet(font='big')
-print(Fore.YELLOW + f.renderText('CORN AGGR v1.3'))
+print(Fore.YELLOW + f.renderText('CORN AGGR v2'))
 
 def resource_path(relative_path):
     # Get absolute path to resource, works for dev and for PyInstaller
@@ -31,7 +31,7 @@ def resource_path(relative_path):
 @click.option('--sound', prompt='Audio "beep" for each buys or sells over X CORN amount', default=100000, help='Set the size in $ to play audio beep')
 @click.option('--filter', prompt='Only show buys or sells over X CORN amount (0 = Show all)', default=0, help='Set the filter size in $ to show trades')
 def aggr(sound, filter):
-    market = 'CORN-USDT'
+    market = 'CORN-BTC'
     audio_file = resource_path('high.mp3')
     playsound(audio_file)
     print('Set filter to: ' + str(filter))
@@ -62,7 +62,7 @@ def aggr(sound, filter):
             response = requests.request("GET", url, params=querystring)
             rjson = response.json()
             # print(rjson)
-            count = 0
+            # count = 01
 
             for i in rjson['data']:
                 side = i['side']
@@ -86,9 +86,8 @@ def aggr(sound, filter):
 
                     if int(filter) <= int(quantity):
                         # Prints formatted string to console window
-                        print(color + stamp + ' -> ' + "{0:.6f}".format(float(price)) + ' - ' + action + ': ' +
-                              f'{int(quantity):n}' + ' CORN' + ' Total: ' + '${:,.2f}'.format(
-                                                dollar) + ' USDT')
+                        print(color + stamp + ' -> ' + "{0:.9f}".format(float(price)) + ' - ' + action.upper() + ': ' +
+                              f'{int(quantity):n}' + ' CORN' + ' Total: ' + str(dollar) + ' BTC')
                         # data = (color + timestamp + ' -> ' + "{0:.6f}".format(float(price)) + ' - ' + action + ': ' +
                         #         f'{int(quantity):n}' + ' CORN' + ' Total: ' + '${:,.2f}'.format(
                         #                         dollar) + ' USDT')
