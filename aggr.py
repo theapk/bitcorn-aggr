@@ -1,6 +1,8 @@
 #################################
 # Author: Ian Schwartz
 # Aggr v2
+# Compile Command: pyinstaller --onefile aggr.py --add-data "T:/Crypto/probit-bot/venv/Lib/site-packages/pyfiglet";./pyfiglet --add-data "T:/Crypto/probit-bot/b
+# itcorn-aggr/high.mp3";. --icon=rocket_corn.ico.
 #################################
 
 import requests, sys, os, locale, click

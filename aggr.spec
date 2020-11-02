@@ -6,7 +6,7 @@ block_cipher = None
 a = Analysis(['aggr.py'],
              pathex=['T:\\Crypto\\probit-bot\\bitcorn-aggr'],
              binaries=[],
-             datas=[('high.mp3', '.'), ('T:\\Crypto\\probit-bot\\venv\\Lib\\site-packages\\pyfiglet', './pyfiglet')],
+             datas=[('T:/Crypto/probit-bot/venv/Lib/site-packages/pyfiglet', './pyfiglet'), ('T:/Crypto/probit-bot/bitcorn-aggr/high.mp3', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -31,4 +31,3 @@ exe = EXE(pyz,
           upx_exclude=[],
           runtime_tmpdir=None,
           console=True , icon='rocket_corn.ico')
-
